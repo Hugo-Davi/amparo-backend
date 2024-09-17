@@ -14,9 +14,4 @@ public class MulherApplication {
 		SpringApplication.run(MulherApplication.class, args);
 	}
 
-	@GetMapping("hello")
-	static public String hello(@RequestParam(value="text", defaultValue="Nenhum valor inserido") String text){
-		System.out.println(text);
-		return String.format("The params passed to the API: " + text);
-	}
 }
