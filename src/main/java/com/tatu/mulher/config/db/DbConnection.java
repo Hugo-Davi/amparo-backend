@@ -9,11 +9,18 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.tatu.mulher.config.Config;
 import org.bson.Document;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 public class DbConnection {
     public static void main(String[] args) {
-        String connectionString = "mongodb+srv://memo:<password>@mulhercluster.42pyx.mongodb.net/?retryWrites=true&w=majority&appName=mulherCluster";
+
+        String connectionString = Config.getConnectionString();
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
