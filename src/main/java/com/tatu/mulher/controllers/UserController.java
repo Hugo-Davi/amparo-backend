@@ -1,6 +1,8 @@
 package com.tatu.mulher.controllers;
 
+import com.tatu.mulher.models.User;
 import com.tatu.mulher.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UserController {
 
     private long idArmazenado;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/", headers = "key=teste", method = RequestMethod.GET)
     public String getUsers(){
@@ -32,7 +37,8 @@ public class UserController {
 
     @RequestMapping(value = "/{name}", method = RequestMethod.POST)
     public String getUserById (@PathVariable("name") String name){
-        System.out.println(name);
+        User user = new User(name, "20");
+        this.userService.saveUser(user);
         return "O nome do usuario é: " + name;
     }
 }
