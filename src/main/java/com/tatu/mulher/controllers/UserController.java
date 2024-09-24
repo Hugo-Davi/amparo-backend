@@ -3,10 +3,9 @@ package com.tatu.mulher.controllers;
 import com.tatu.mulher.models.User;
 import com.tatu.mulher.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -35,10 +34,12 @@ public class UserController {
         return "O id desse usuário é: " + id;
     }
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.POST)
-    public String getUserById (@PathVariable("name") String name){
-        User user = new User(name, "20");
-        this.userService.saveUser(user);
-        return "O nome do usuario é: " + name;
+    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getUserById (@RequestBody User user){
+        //User user = new User(name, "20");
+        //this.userService.saveUser(user);
+        System.out.println(user.getName());
+        System.out.println(user.getAge());
+        return "funcionou";
     }
 }
