@@ -1,11 +1,15 @@
 package com.tatu.mulher.controllers;
 
+import com.google.gson.Gson;
 import com.tatu.mulher.models.User;
 import com.tatu.mulher.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -16,10 +20,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/", headers = "key=teste", method = RequestMethod.GET)
-    public String getUsers(){
-        System.out.println("users get");
-        return "funcionando";
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<String> getUsers(){
+        String json;
+        json = new Gson().toJson(this.userService.getAllUsers());
+        return ResponseEntity.ok(json);
     }
 
     @RequestMapping(value = "/valor", method = RequestMethod.GET)
@@ -35,11 +40,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getUserById (@RequestBody User user){
-        //User user = new User(name, "20");
-        //this.userService.saveUser(user);
-        System.out.println(user.getName());
-        System.out.println(user.getAge());
-        return "funcionou";
+    public ResponseEntity<String> createUser (@RequestBody User user){
+        this.userService.createUser(user);
+        return ResponseEntity.ok("{status:funcionou}");
     }
 }
