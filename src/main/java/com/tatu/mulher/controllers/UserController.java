@@ -15,8 +15,6 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    private long idArmazenado;
-
     @Autowired
     private UserService userService;
 
@@ -27,16 +25,13 @@ public class UserController {
         return ResponseEntity.ok(json);
     }
 
-    @RequestMapping(value = "/valor", method = RequestMethod.GET)
-    public String getIdArmazenado(){
-        return "Id Armazenado no server é: " + this.idArmazenado;
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String getUserById (@PathVariable("id") long id){
-        System.out.println(id);
-        this.idArmazenado = id;
-        return "O id desse usuário é: " + id;
+    public ResponseEntity<String> getUserById(@PathVariable("id") String id) {
+        String json;
+
+        json = new Gson().toJson(this.userService.getUser(id));
+
+        return ResponseEntity.ok(json);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,4 +39,17 @@ public class UserController {
         this.userService.createUser(user);
         return ResponseEntity.ok("{status:funcionou}");
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> updateUser(@PathVariable String id) {
+        String json;
+        User user = this.userService.getUser(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        this.userService.deleteUser(id);
+        json = new Gson().toJson(user);
+        return ResponseEntity.ok(json);
+    }
+
 }
