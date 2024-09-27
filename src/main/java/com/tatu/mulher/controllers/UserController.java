@@ -36,19 +36,36 @@ public class UserController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createUser (@RequestBody User user){
-        this.userService.createUser(user);
+        this.userService.saveUser(user);
         return ResponseEntity.ok("{status:funcionou}");
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateUser (@RequestBody User user){
+        String json;
+
+        if (user.getId() == null){
+            json = "message: ID não fornecido";
+            return ResponseEntity
+                    .unprocessableEntity().body(new Gson().toJson(json));
+        }
+        this.userService.saveUser(user);
+        json = "message: criado";
+        return ResponseEntity
+                .ok(new Gson().toJson(json));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> updateUser(@PathVariable String id) {
         String json;
+
         User user = this.userService.getUser(id);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
         this.userService.deleteUser(id);
         json = new Gson().toJson(user);
+
         return ResponseEntity.ok(json);
     }
 
