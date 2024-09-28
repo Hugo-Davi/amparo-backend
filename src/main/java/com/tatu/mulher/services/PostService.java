@@ -1,32 +1,32 @@
 package com.tatu.mulher.services;
 
+import com.tatu.mulher.models.Post;
 import com.tatu.mulher.models.User;
-import com.tatu.mulher.repositories.UserRepository;
+import com.tatu.mulher.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserService {
+public class PostService {
 
     @Autowired
-    private UserRepository repository;
+    private PostRepository repository;
 
-    public User save(User user) {
-        return repository.save(user);
+    public Post save(Post post) {
+        return repository.save(post);
     }
-    public User get(String id) {
+    public Post get(String id) {
         return repository.findById(id).orElse(null);
     }
-    public List<User> getAll(){
+    public List<Post> getAll(){
         return repository.findAll();
     }
     public void delete(String id) {
         repository.deleteById(id);
     }
-    public User update(User user) {
-        return repository.save(user);
+    public Post update(Post post) {
+        return repository.save(post);
     }
-
 }

@@ -17,29 +17,29 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<String> getUsers(){
-        String response = new Gson().toJson(this.userService.getAllUsers());
+    public ResponseEntity<String> getAll(){
+        String response = new Gson().toJson(this.service.getAll());
         return ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<String> getUserById(@PathVariable("id") String id) {
-        String response = new Gson().toJson(this.userService.getUser(id));
+    public ResponseEntity<String> getById(@PathVariable("id") String id) {
+        String response = new Gson().toJson(this.service.get(id));
         return ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createUser (@RequestBody User user){
-        this.userService.saveUser(user);
+    public ResponseEntity<String> create (@RequestBody User user){
+        this.service.save(user);
         Response response = new Response("Usuário foi salvo");
         return ResponseEntity.ok(new Gson().toJson(response));
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateUser (@RequestBody User user){
+    public ResponseEntity<String> update (@RequestBody User user){
         // Checa se ID existe na estrutura passada
         if (user.getId() == null){
             Response response = new Response("ID não fornecido");
@@ -47,7 +47,7 @@ public class UserController {
                     .unprocessableEntity().body(new Gson().toJson(response));
         }
 
-        this.userService.saveUser(user);
+        this.service.save(user);
 
         Response response = new Response("Usuário atualizado");
         return ResponseEntity
@@ -55,15 +55,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> updateUser(@PathVariable String id) {
-        User user = this.userService.getUser(id);
+    public ResponseEntity<String> delete(@PathVariable String id) {
+        User user = this.service.get(id);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        this.userService.deleteUser(id);
+        this.service.delete(id);
         String response = new Gson().toJson(user);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity
+                .ok(response);
     }
 
 }
