@@ -2,7 +2,6 @@ package com.tatu.mulher.controllers;
 
 import com.google.gson.Gson;
 import com.tatu.mulher.models.Post;
-import com.tatu.mulher.models.User;
 import com.tatu.mulher.services.PostService;
 import com.tatu.mulher.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;

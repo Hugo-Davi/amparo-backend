@@ -15,6 +15,7 @@ public class PostService {
     private PostRepository repository;
 
     public Post save(Post post) {
+        post.setCreationDate();
         return repository.save(post);
     }
     public Post get(String id) {

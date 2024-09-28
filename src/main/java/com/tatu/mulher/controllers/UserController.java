@@ -38,15 +38,13 @@ public class UserController {
         return ResponseEntity.ok(new Gson().toJson(response));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> update (@RequestBody User user){
-        // Checa se ID existe na estrutura passada
-        if (user.getId() == null){
-            Response response = new Response("ID não fornecido");
-            return ResponseEntity
-                    .unprocessableEntity().body(new Gson().toJson(response));
-        }
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update (@PathVariable("id") String id, @RequestBody User user){
 
+        if (!this.service.existById(id)){
+            return ResponseEntity.notFound().build();
+        }
+        user.setId(id);
         this.service.save(user);
 
         Response response = new Response("Usuário atualizado");
