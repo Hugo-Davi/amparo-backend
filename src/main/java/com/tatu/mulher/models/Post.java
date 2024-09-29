@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document(collection = "posts")
 public class Post {
@@ -13,7 +14,8 @@ public class Post {
     private String title;
     @DBRef
     private User creator;
-    private LocalDateTime creationDate;
+    private String creationDate;
+    private List<Comment> comments;
 
     public String getId() {
         return id;
@@ -39,11 +41,19 @@ public class Post {
         this.creator = creator;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public String getCreationDate() {
+        return this.creationDate;
     }
 
     public void setCreationDate() {
-        this.creationDate = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now().toString();
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
