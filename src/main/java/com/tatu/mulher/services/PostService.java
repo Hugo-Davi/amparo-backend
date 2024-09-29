@@ -47,14 +47,14 @@ public class PostService {
         // define como data de agora
         comment.setCommentDate();
         List<Comment> newComments = post.getComments();
+        // Se não existe uma sessão de comentários, cria uma vazia
         if (newComments == null) {
             newComments = new ArrayList<>();
         }
-        // adicionar novo comentário
         newComments.add(comment);
-        //newComments.add(comment);
         post.setComments(newComments);
-        // atualiza todo o documento de post com novo comentário
+
+        // atualiza todo o documento de post, porém com um novo comentário
         this.update(post);
     }
 }
