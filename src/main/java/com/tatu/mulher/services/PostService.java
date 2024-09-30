@@ -32,16 +32,14 @@ public class PostService {
     public Post get(String id) {
         return repository.findById(id).orElse(null);
     }
-    public List<Post> getAll(){
-        return repository.findAll();
-    }
+    public List<Post> getAll(){return repository.findAll();}
     public void delete(String id) {
         repository.deleteById(id);
     }
     public Post update(Post post) {
         return repository.save(post);
     }
-
+    public boolean existById(String id) { return repository.existsById(id); }
     public void postComment(String id, Comment comment) {
         Post post = this.get(id);
         // define como data de agora

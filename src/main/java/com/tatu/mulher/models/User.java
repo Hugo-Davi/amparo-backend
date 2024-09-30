@@ -13,7 +13,7 @@ public class User {
     private String cep;
     private String phoneNumber;
     private String cpf;
-    
+
 
     public User(String name, String age) {
         this.name = name;
