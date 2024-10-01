@@ -1,22 +1,13 @@
-package com.tatu.mulher.services;
+package com.tatu.mulher.Posts.services;
 
-import com.mongodb.client.MongoCollection;
 import com.tatu.mulher.models.Comment;
 import com.tatu.mulher.models.Post;
-import com.mongodb.client.model.Updates;
-import com.tatu.mulher.models.User;
 import com.tatu.mulher.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostService {
