@@ -1,8 +1,8 @@
-package com.tatu.mulher.UsersAndAuth.controllers;
+package com.tatu.mulher.controllers;
 
 import com.google.gson.Gson;
 import com.tatu.mulher.models.User;
-import com.tatu.mulher.UsersAndAuth.services.UserService;
+import com.tatu.mulher.services.UserService;
 import com.tatu.mulher.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

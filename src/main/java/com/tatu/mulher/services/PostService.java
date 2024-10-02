@@ -1,4 +1,4 @@
-package com.tatu.mulher.Posts.services;
+package com.tatu.mulher.services;
 
 import com.tatu.mulher.models.Comment;
 import com.tatu.mulher.models.Post;

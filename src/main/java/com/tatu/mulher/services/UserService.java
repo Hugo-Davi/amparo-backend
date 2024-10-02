@@ -1,4 +1,4 @@
-package com.tatu.mulher.UsersAndAuth.services;
+package com.tatu.mulher.services;
 
 import com.tatu.mulher.models.User;
 import com.tatu.mulher.repositories.UserRepository;
