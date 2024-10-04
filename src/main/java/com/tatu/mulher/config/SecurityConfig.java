@@ -20,11 +20,11 @@ public class SecurityConfig {
     // authentication
     public UserDetailsService userDetailsService(PasswordEncoder encoder){
         UserDetails admin = User.withUsername("Bora_Bill")
-                .password(encoder.encode("arnottCaiado22"))
+                .password(encoder.encode("teste22"))
                 .roles("ADMIN")
                 .build();
         UserDetails user = User.withUsername("fulano")
-                .password(encoder.encode("arnottCaiado33"))
+                .password(encoder.encode("teste33"))
                 .roles("USER")
                 .build();
 
