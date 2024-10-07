@@ -14,6 +14,8 @@ public class User {
     private String phoneNumber;
     private String cpf;
 
+    private Address address;
+
 
     public User(String name, String age) {
         this.name = name;
