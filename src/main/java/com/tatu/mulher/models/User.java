@@ -10,17 +10,11 @@ public class User {
     private String name;
     private String age;
 
-    private String cep;
     private String phoneNumber;
     private String cpf;
 
     private Address address;
 
-
-    public User(String name, String age) {
-        this.name = name;
-        this.age = age;
-    }
 
     public String getId() {
         return id;
@@ -44,5 +38,29 @@ public class User {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
