@@ -1,7 +1,10 @@
 package com.tatu.mulher.models;
 
+import com.tatu.mulher.models.enums.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Set;
 
 @Document(collection = "users")
 public class User {
@@ -11,6 +14,8 @@ public class User {
 
     private String password;
     private String email;
+
+    private Set<Role> roles;
 
     private String age;
 
@@ -81,5 +86,17 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role newRole) {
+        this.roles.add(newRole);
     }
 }
