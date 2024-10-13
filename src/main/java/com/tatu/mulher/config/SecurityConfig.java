@@ -22,17 +22,6 @@ public class SecurityConfig {
     @Bean
     // authentication
     public UserDetailsService userDetailsService(PasswordEncoder encoder){
-//        UserDetails admin = User.withUsername("Bora_Bill")
-//                .password(encoder.encode("teste22"))
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.withUsername("fulano")
-//                .password(encoder.encode("teste33"))
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(admin, user);
-        // ensure the passwords are encoded properly
         User.UserBuilder users = User.withDefaultPasswordEncoder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(users.username("user").password("password").roles("USER").build());
