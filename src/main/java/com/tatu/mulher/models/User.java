@@ -1,8 +1,10 @@
 package com.tatu.mulher.models;
 
+import com.tatu.mulher.controllers.dto.LoginRequest;
 import com.tatu.mulher.models.enums.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
@@ -23,6 +25,10 @@ public class User {
     private String cpf;
 
     private Address address;
+
+    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.password(), this.password);
+    }
 
     public String getPassword() {
         return password;
