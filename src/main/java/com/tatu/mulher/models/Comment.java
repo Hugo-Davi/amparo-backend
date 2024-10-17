@@ -1,12 +1,15 @@
 package com.tatu.mulher.models;
 
+import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDate;
 
 public class Comment {
+    @Setter
     @DBRef
     private User owner;
+    @Setter
     private String text;
     private String commentDate;
 
@@ -14,16 +17,8 @@ public class Comment {
         return owner;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     public String getText() {
         return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public String getCommentDate() {
