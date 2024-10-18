@@ -33,10 +33,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${jwt.public.key}")
-    private RSAPublicKey publicKey;
-    @Value("${jwt.private.key}")
-    private RSAPrivateKey privateKey;
+//    @Value("${jwt.public.key}")
+//    private RSAPublicKey publicKey;
+//    @Value("${jwt.private.key}")
+//    private RSAPrivateKey privateKey;
 
     @Bean
     // authentication
@@ -72,16 +72,16 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(publicKey).build();
-    }
-
-    @Bean JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(privateKey).build();
-        var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwks);
-    }
+//    @Bean
+//    public JwtDecoder jwtDecoder() {
+//        return NimbusJwtDecoder.withPublicKey(publicKey).build();
+//    }
+//
+//    @Bean JwtEncoder jwtEncoder() {
+//        JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(privateKey).build();
+//        var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+//        return new NimbusJwtEncoder(jwks);
+//    }
 
 
     @Bean
