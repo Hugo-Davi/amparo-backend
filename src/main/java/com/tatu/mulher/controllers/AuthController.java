@@ -24,8 +24,7 @@ import java.util.List;
 @RequestMapping(value = "/auth")
 public class AuthController {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private UserService userService;
@@ -37,7 +36,7 @@ public class AuthController {
 
         List<User> user = userService.findByUsername(loginRequest.username()); // Espera uma Lista de 1 ocorrência
 
-        if (user.isEmpty() || !user.getFirst().isLoginCorrect(loginRequest, passwordEncoder)){
+        if (user.isEmpty() || !user.get(0).isLoginCorrect(loginRequest, passwordEncoder)){
             throw new BadCredentialsException("user or password is invalid");
         }
 
@@ -46,7 +45,7 @@ public class AuthController {
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("amparo-backend")
-                .subject(user.getFirst().getId())
+                .subject(user.get(0).getId())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
                 .build();

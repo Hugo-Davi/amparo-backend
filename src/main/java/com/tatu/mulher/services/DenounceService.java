@@ -3,9 +3,11 @@ package com.tatu.mulher.services;
 import com.tatu.mulher.models.Denounce;
 import com.tatu.mulher.repositories.DenounceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DenounceService {
     @Autowired
     private DenounceRepository repository;

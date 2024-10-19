@@ -40,7 +40,7 @@ public class SecurityConfig {
 
     @Bean
     // authentication
-    private UserDetailsService userDetailsService(PasswordEncoder encoder){
+    public UserDetailsService userDetailsService(PasswordEncoder encoder){
         User.UserBuilder users = User.withDefaultPasswordEncoder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(users.username("user").password("password").roles("USER").build());
@@ -50,7 +50,7 @@ public class SecurityConfig {
 
 //    @Bean
 //    @Order(1)
-//    private SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+//    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 //        http
 //                .securityMatcher("/api/**")
 //                .authorizeHttpRequests(authorize -> authorize
@@ -61,7 +61,7 @@ public class SecurityConfig {
 //    }
 
     @Bean
-    private SecurityFilterChain formLoginFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain formLoginFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated()
