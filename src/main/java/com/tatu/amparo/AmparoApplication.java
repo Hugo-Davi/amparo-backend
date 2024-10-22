@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
-@RequestMapping(value = "/api")
 public class AmparoApplication {
 
 	public static void main(String[] args) {
