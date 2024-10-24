@@ -5,6 +5,7 @@ import com.tatu.amparo.controllers.dto.LoginResponse;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,17 +25,15 @@ import java.util.List;
 @RequestMapping(value = "/auth")
 public class AuthController {
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private JwtEncoder jwtEncoder;
 
     @Autowired
     private UserService userService;
-//    @Autowired
-//    private JwtService jwtService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
         List<User> user = userService.findByUsername(loginRequest.username()); // Espera uma Lista de 1 ocorrência

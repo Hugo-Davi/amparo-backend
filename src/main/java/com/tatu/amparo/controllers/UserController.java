@@ -1,13 +1,23 @@
 package com.tatu.amparo.controllers;
 
 import com.google.gson.Gson;
+import com.tatu.amparo.controllers.dto.LoginRequest;
+import com.tatu.amparo.controllers.dto.LoginResponse;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import com.tatu.amparo.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
