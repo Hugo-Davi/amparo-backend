@@ -38,10 +38,12 @@ public class AuthController {
 
         List<User> user = userService.findByUsername(loginRequest.username()); // Espera uma Lista de 1 ocorrência
 
-        if (user.isEmpty() || !user.get(0).isLoginCorrect(loginRequest, passwordEncoder)){
+        if (user.isEmpty()){
             throw new BadCredentialsException("user or password is invalid");
         }
-
+        if (!user.get(0).isLoginCorrect(loginRequest, passwordEncoder)) {
+            throw new BadCredentialsException("user or password is invalid");
+        }
         Instant now = Instant.now();
         long expiresIn = 300L; // TEMPO DE EXPIRAÇÃO
 

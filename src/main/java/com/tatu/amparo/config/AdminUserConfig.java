@@ -24,7 +24,7 @@ public class AdminUserConfig implements CommandLineRunner {
     public void run(String... args) throws Exception{
         List<User> userAdmin = userService.findByUsername("admin");
 
-        if (userAdmin.isEmpty()) {
+        if (!userAdmin.isEmpty()) {
             System.out.println("Admin ja existe!");
         }
         else {
