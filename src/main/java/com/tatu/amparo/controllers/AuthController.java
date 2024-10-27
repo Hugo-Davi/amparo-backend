@@ -2,6 +2,7 @@ package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.controllers.dto.LoginRequest;
 import com.tatu.amparo.controllers.dto.LoginResponse;
+import com.tatu.amparo.controllers.dto.RegisterUserRequest;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,11 @@ public class AuthController {
 
         return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
     }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> register(@RequestBody RegisterUserRequest userRequest){
+        System.out.println(userRequest.password() + " " + userRequest.username());
+        return ResponseEntity.ok().build();
+    }
+
 }
