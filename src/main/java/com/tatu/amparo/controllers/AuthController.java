@@ -65,18 +65,11 @@ public class AuthController {
 
     @Transactional
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> register(@RequestBody RegisterUserRequest userRequest){
-        System.out.println(userRequest.password() + " " + userRequest.username());
-
+    public ResponseEntity<Void> register(@RequestBody User user){
         // CHECA SE JÁ EXISTE USUÁRIO
-        if (!userService.findByUsername(userRequest.username()).isEmpty()){
+        if (!userService.findByUsername(user.getName()).isEmpty()){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
-
-        User user = new User();
-        user.setName(userRequest.username());
-        user.setPassword(userRequest.password());
-
         userService.save(user);
         return ResponseEntity.ok().build();
     }

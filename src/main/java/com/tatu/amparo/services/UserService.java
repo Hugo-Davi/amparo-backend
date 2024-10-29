@@ -44,7 +44,4 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }
-
-
-
 }
