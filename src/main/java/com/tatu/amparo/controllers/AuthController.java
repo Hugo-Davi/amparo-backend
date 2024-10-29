@@ -6,6 +6,7 @@ import com.tatu.amparo.controllers.dto.RegisterUserRequest;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,10 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -60,9 +63,21 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
     }
 
+    @Transactional
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> register(@RequestBody RegisterUserRequest userRequest){
         System.out.println(userRequest.password() + " " + userRequest.username());
+
+        // CHECA SE JÁ EXISTE USUÁRIO
+        if (!userService.findByUsername(userRequest.username()).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        User user = new User();
+        user.setName(userRequest.username());
+        user.setPassword(userRequest.password());
+
+        userService.save(user);
         return ResponseEntity.ok().build();
     }
 
