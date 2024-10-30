@@ -2,7 +2,6 @@ package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.controllers.dto.LoginRequest;
 import com.tatu.amparo.controllers.dto.LoginResponse;
-import com.tatu.amparo.controllers.dto.RegisterUserRequest;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
