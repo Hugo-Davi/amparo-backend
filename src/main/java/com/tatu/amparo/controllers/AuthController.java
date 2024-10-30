@@ -4,6 +4,8 @@ import com.tatu.amparo.controllers.dto.LoginRequest;
 import com.tatu.amparo.controllers.dto.LoginResponse;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
+import org.apache.catalina.Role;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.StreamSupport.stream;
 
 
 @RestController
@@ -50,11 +58,16 @@ public class AuthController {
         Instant now = Instant.now();
         long expiresIn = 300L; // TEMPO DE EXPIRAÇÃO
 
+        String scopes = user.get(0).getRoles().stream()
+                        .map(String::valueOf) // Lambda function para transformar cada "ROLE" em String
+                        .collect(Collectors.joining(", "));
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("amparo-backend")
                 .subject(user.get(0).getId())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
+                .claim("scope", scopes)
                 .build();
 
         String jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

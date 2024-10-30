@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tatu</groupId>
-	<artifactId>mulher</artifactId>
+	<artifactId>amparo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mulher</name>
 	<description>Projeto contra a violência doméstica contra mulheres.</description>
