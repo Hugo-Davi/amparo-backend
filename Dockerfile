@@ -1,6 +1,7 @@
 FROM ubuntu:latest AS build
 
 RUN apt-get update
+RUN apt-get -y install sudo
 # RUN apt-get install openjdk-22openjdk -y
 RUN sudo apt install ./jdk-21_linux-x64_bin.deb
 
