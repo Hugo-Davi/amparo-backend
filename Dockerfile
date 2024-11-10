@@ -1,19 +1,17 @@
-FROM ubuntu:latest AS build
+# Use a Debian-based image as the base
+FROM debian:latest
 
-RUN apt-get update
-RUN apt-get -y install sudo
-# RUN apt-get install openjdk-22openjdk -y
-RUN sudo apt install ./jdk-21_linux-x64_bin.deb
+# Copy the JDK DEB package to the image
+COPY jdk-21_linux-x64_bin.deb .
 
-COPY . .
+# Install the JDK package
+RUN dpkg -i ./jdk-21_linux-x64_bin.deb
 
-RUN apt-get install maven -y
-RUN mvn clean install
+# Set the environment variable JAVA_HOME
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64/
 
-FROM openjdk:22-slim
-
+# Expose the default HTTP port
 EXPOSE 8080
 
-COPY --from=build /target/amparo-1.0.0.jar app.jar
-
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Define the command to run when the container starts
+CMD ["java", "-version"]
