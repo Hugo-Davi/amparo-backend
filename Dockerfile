@@ -1,7 +1,9 @@
 FROM ubuntu:latest AS build
 
 RUN apt-get update
-RUN apt-get install openjdk-22openjdk -y
+# RUN apt-get install openjdk-22openjdk -y
+RUN apt-get install -y --no-install-recommends openjdk-22openjdk
+
 COPY . .
 
 RUN apt-get install maven -y
