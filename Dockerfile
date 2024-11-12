@@ -4,11 +4,10 @@ RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 
 COPY . /app
-# RUN ls -la /app
 
 RUN apt-get install maven -y
-RUN cd app && \
-    mvn clean install
+WORKDIR /app
+RUN mvn clean install
 
 RUN ls -la /app/target
 
