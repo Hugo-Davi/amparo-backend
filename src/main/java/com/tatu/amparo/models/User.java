@@ -1,6 +1,6 @@
 package com.tatu.amparo.models;
 
-import com.tatu.amparo.controllers.dto.LoginRequest;
+import com.tatu.amparo.dto.LoginRequest;
 import com.tatu.amparo.models.enums.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,12 +16,12 @@ public class User {
 
     private String password;
     private String email;
+    private String phoneNumber;
 
     private Set<Role> roles;
 
     private String age;
 
-    private String phoneNumber;
     private String cpf;
 
     private Address address;

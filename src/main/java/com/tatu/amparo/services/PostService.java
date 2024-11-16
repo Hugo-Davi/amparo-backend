@@ -2,10 +2,12 @@ package com.tatu.amparo.services;
 
 import com.tatu.amparo.models.Comment;
 import com.tatu.amparo.models.Post;
+import com.tatu.amparo.models.User;
 import com.tatu.amparo.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,12 @@ public class PostService {
         return repository.save(post);
     }
     public boolean existById(String id) { return repository.existsById(id); }
+
+    public Post createPost(Post post) {
+        post.setCreationDate();
+        return repository.save(post);
+    }
+
     public void postComment(String id, Comment comment) {
         Post post = this.get(id);
         // define como data de agora

@@ -1,11 +1,12 @@
 package com.tatu.amparo.controllers;
 
-import com.tatu.amparo.controllers.dto.LoginRequest;
-import com.tatu.amparo.controllers.dto.LoginResponse;
+import com.tatu.amparo.dto.LoginRequest;
+import com.tatu.amparo.dto.LoginResponse;
+import com.tatu.amparo.dto.RegisterRequest;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
-import org.apache.catalina.Role;
-import org.apache.tomcat.util.buf.StringUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,17 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.StreamSupport.stream;
 
 
 @RestController
 @RequestMapping(value = "/auth")
+@Tag(name = "amparo")
 public class AuthController {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -44,27 +43,28 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Login", method = "POST")
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
-        List<User> user = userService.findByUsername(loginRequest.username()); // Espera uma Lista de 1 ocorrência
+        User user = userService.findByCredential(loginRequest.credential()); // Espera uma Lista de 1 ocorrência
 
-        if (user.isEmpty()){
+        if (user == null){
             throw new BadCredentialsException("user or password is invalid");
         }
-        if (!user.get(0).isLoginCorrect(loginRequest, passwordEncoder)) {
+        if (!user.isLoginCorrect(loginRequest, passwordEncoder)) {
             throw new BadCredentialsException("user or password is invalid");
         }
         Instant now = Instant.now();
         long expiresIn = 300L; // TEMPO DE EXPIRAÇÃO
 
-        String scopes = user.get(0).getRoles().stream()
+        String scopes = user.getRoles().stream()
                         .map(String::valueOf) // Lambda function para transformar cada "ROLE" em String
                         .collect(Collectors.joining(", "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("amparo-backend")
-                .subject(user.get(0).getId())
+                .subject(user.getId())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
                 .claim("scope", scopes)
@@ -77,12 +77,16 @@ public class AuthController {
 
     @Transactional
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> register(@RequestBody User user){
-        // CHECA SE JÁ EXISTE USUÁRIO
-        if (!userService.findByUsername(user.getName()).isEmpty()){
+    public ResponseEntity<Void> register(@RequestBody RegisterRequest registerRequest){
+        if (registerRequest.credential().length() == 0) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        userService.save(user);
+        // CHECA SE AS CREDENCIAL JÁ EXISTE
+        if (userService.existCredential(registerRequest.credential())){
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        userService.registerUser(registerRequest);
         return ResponseEntity.ok().build();
     }
 

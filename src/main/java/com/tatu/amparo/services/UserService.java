@@ -1,5 +1,6 @@
 package com.tatu.amparo.services;
 
+import com.tatu.amparo.dto.RegisterRequest;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.models.enums.Role;
 import com.tatu.amparo.repositories.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -43,5 +45,44 @@ public class UserService {
         user.setRoles(Set.of(Role.USER, Role.ADMIN));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
+    }
+
+    public User registerUser(RegisterRequest registerRequest) {
+        User user = new User();
+        if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(registerRequest.credential()).matches()) {
+            user.setEmail(registerRequest.credential());
+        } else { user.setPhoneNumber(registerRequest.credential()); }
+
+        user.setRoles(Set.of(Role.USER));
+        user.setPassword(passwordEncoder.encode(registerRequest.password()));
+        return repository.save(user);
+    }
+
+    public boolean existCredential(String credential) {
+        // Credential is a email?
+        if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(credential).matches()){
+            // Credential exist in email?
+            if (repository.findByEmail(credential) == null) {
+                return false;
+            }
+            return true;
+        }
+        // Credential is a Phone Number?
+        if (Pattern.compile("^\\d+$", Pattern.CASE_INSENSITIVE).matcher(credential).matches()) {
+            // Credential exist in phone number?
+            if (repository.findByPhoneNumber(credential) == null) {
+                return false;
+            }
+            return true;
+        }
+        // Invalid credential
+        return true;
+    }
+
+    public User findByCredential(String credential) {
+        if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(credential).matches()){
+            return repository.findByEmail(credential);
+        }
+        return repository.findByPhoneNumber(credential);
     }
 }

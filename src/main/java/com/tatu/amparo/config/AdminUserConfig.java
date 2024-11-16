@@ -22,14 +22,12 @@ public class AdminUserConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception{
-        List<User> userAdmin = userService.findByUsername("admin");
-
-        if (!userAdmin.isEmpty()) {
+        if (userService.existCredential("admin@admin.com")) {
             System.out.println("Admin ja existe!");
         }
         else {
             User user = new User();
-            user.setName("admin");
+            user.setEmail("admin@admin.com");
             user.setPassword("123");
             userService.saveAdmin(user);
             System.out.println("Usuário admin criado.");

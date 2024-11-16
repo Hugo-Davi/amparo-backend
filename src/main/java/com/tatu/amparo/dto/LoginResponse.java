@@ -1,4 +1,4 @@
-package com.tatu.amparo.controllers.dto;
+package com.tatu.amparo.dto;
 
 public record LoginResponse(String accessToken, Long expiresIn) {
 }

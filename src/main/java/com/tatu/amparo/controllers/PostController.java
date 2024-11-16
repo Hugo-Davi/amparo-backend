@@ -1,14 +1,18 @@
 package com.tatu.amparo.controllers;
 
-import com.google.gson.Gson;
 import com.tatu.amparo.models.Comment;
 import com.tatu.amparo.models.Post;
+import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.PostService;
-import com.tatu.amparo.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,8 +34,18 @@ public class PostController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Post> create (@RequestBody Post post){
-        return ResponseEntity.ok(this.service.save(post));
+    public ResponseEntity<Post> create (@RequestBody Post post, JwtAuthenticationToken token){
+
+        System.out.println(token.getName());
+        if(token.getName() == null){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        User user = new User();
+        user.setId(token.getName());
+        post.setCreator(user);
+
+        return ResponseEntity.ok(this.service.createPost(post));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +57,6 @@ public class PostController {
         post.setId(id);
         this.service.save(post);
 
-        Response response = new Response("Usuário atualizado");
         return ResponseEntity
                 .ok(post);
     }
