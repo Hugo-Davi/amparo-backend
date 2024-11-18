@@ -19,6 +19,10 @@ public class Post {
     @DBRef
     private User creator;
     private String creationDate;
+
+    private String imageUrl;
+    private List<String> content;
+
     @Setter
     private List<Comment> comments;
 

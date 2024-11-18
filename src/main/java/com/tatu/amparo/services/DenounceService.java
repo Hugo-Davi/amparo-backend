@@ -28,4 +28,7 @@ public class DenounceService {
         return repository.save(denounce);
     }
     public boolean existById(String id) { return repository.existsById(id); }
+    public List<Denounce> getDenouncesByUser(String id) {
+        return repository.findByUser(id);
+    }
 }

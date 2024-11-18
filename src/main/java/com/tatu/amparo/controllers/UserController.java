@@ -1,12 +1,16 @@
 package com.tatu.amparo.controllers;
 
+import com.tatu.amparo.models.Post;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -58,6 +62,17 @@ public class UserController {
 
         return ResponseEntity
                 .ok(user);
+    }
+
+    @RequestMapping(value = "/me", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getMe (JwtAuthenticationToken token){
+
+        System.out.println(token.getName());
+        if(token.getName() == null){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        return ResponseEntity.ok(this.service.get(token.getName()));
     }
 
 }

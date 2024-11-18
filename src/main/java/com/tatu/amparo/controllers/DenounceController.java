@@ -6,6 +6,7 @@ import com.tatu.amparo.services.DenounceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class DenounceController {
     private DenounceService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<Denounce>> getAll(){
-        return ResponseEntity.ok(this.service.getAll());
+    public ResponseEntity<List<Denounce>> getAll(JwtAuthenticationToken token){
+        return ResponseEntity.ok(this.service.getDenouncesByUser(token.getName()));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -27,7 +28,8 @@ public class DenounceController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> create (@RequestBody Denounce denounce){
+    public ResponseEntity<Void> create (@RequestBody Denounce denounce, JwtAuthenticationToken token){
+        denounce.setUser(token.getName());
         this.service.save(denounce);
         return ResponseEntity.ok().build();
     }

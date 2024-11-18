@@ -41,8 +41,7 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
-        User user = new User();
-        user.setId(token.getName());
+        User user = new User(token.getName());
         post.setCreator(user);
 
         return ResponseEntity.ok(this.service.createPost(post));

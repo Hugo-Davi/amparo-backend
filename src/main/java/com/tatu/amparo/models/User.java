@@ -26,6 +26,12 @@ public class User {
 
     private Address address;
 
+    public User() {}
+
+    public User(String id) {
+        this.id = id;
+    }
+
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.password(), this.password);
     }

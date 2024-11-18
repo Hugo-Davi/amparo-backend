@@ -28,7 +28,8 @@ public class Denounce {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String id) {
+        User user = new User(id);
         this.user = user;
     }
 
