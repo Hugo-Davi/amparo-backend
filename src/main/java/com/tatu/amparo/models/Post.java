@@ -20,7 +20,9 @@ public class Post {
     private User creator;
     private String creationDate;
 
+    @Setter
     private String imageUrl;
+    @Setter
     private List<String> content;
 
     @Setter
@@ -50,5 +52,12 @@ public class Post {
         return comments;
     }
 
+    public List<String> getContent() {
+        return content;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
 }
