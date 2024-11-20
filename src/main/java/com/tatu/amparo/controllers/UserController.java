@@ -1,6 +1,7 @@
 package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.models.Post;
+import com.tatu.amparo.models.SupportNetwork;
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,33 +20,33 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAll(){
-        return ResponseEntity.ok(this.service.getAll());
+        return ResponseEntity.ok(this.userService.getAll());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> getById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(this.service.get(id));
+        return ResponseEntity.ok(this.userService.get(id));
     }
 
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> create (@RequestBody User user){
-        return ResponseEntity.ok(this.service.save(user));
-    }
+//    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+//    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<User> create (@RequestBody User user){
+//        return ResponseEntity.ok(this.userService.save(user));
+//    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> update (@PathVariable("id") String id, @RequestBody User user){
 
-        if (!this.service.existById(id)){
+        if (!this.userService.existById(id)){
             return ResponseEntity.notFound().build();
         }
         user.setId(id);
-        this.service.save(user);
+        //this.service.save(user);
 
         return ResponseEntity
                 .ok(user);
@@ -54,11 +55,11 @@ public class UserController {
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> delete(@PathVariable String id) {
-        User user = this.service.get(id);
+        User user = this.userService.get(id);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        this.service.delete(id);
+        this.userService.delete(id);
 
         return ResponseEntity
                 .ok(user);
@@ -72,7 +73,8 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
-        return ResponseEntity.ok(this.service.get(token.getName()));
+        return ResponseEntity.ok(this.userService.get(token.getName()));
     }
+
 
 }

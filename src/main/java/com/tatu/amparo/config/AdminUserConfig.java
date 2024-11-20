@@ -2,6 +2,7 @@ package com.tatu.amparo.config;
 
 import com.tatu.amparo.models.User;
 import com.tatu.amparo.models.enums.Role;
+import com.tatu.amparo.services.AuthService;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,21 +16,20 @@ import java.util.Set;
 public class AdminUserConfig implements CommandLineRunner {
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception{
-        if (userService.existCredential("admin@admin.com")) {
+        if (authService.existCredential("admin@admin.com")) {
             System.out.println("Admin ja existe!");
         }
         else {
             User user = new User();
             user.setEmail("admin@admin.com");
-            user.setPassword("123");
-            userService.saveAdmin(user);
+            authService.saveAdmin(user, "123");
             System.out.println("Usuário admin criado.");
         }
     }

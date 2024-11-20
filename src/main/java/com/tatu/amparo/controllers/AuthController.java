@@ -3,7 +3,9 @@ package com.tatu.amparo.controllers;
 import com.tatu.amparo.dto.LoginRequest;
 import com.tatu.amparo.dto.LoginResponse;
 import com.tatu.amparo.dto.RegisterRequest;
+import com.tatu.amparo.models.Authentication;
 import com.tatu.amparo.models.User;
+import com.tatu.amparo.services.AuthService;
 import com.tatu.amparo.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,30 +43,30 @@ public class AuthController {
     private JwtEncoder jwtEncoder;
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @Operation(summary = "Login", method = "POST")
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
-        User user = userService.findByCredential(loginRequest.credential()); // Espera uma Lista de 1 ocorrência
+        Authentication auth = authService.findByCredential(loginRequest.credential()); // Espera uma Lista de 1 ocorrência
 
-        if (user == null){
+        if (auth == null){
             throw new BadCredentialsException("user or password is invalid");
         }
-        if (!user.isLoginCorrect(loginRequest, passwordEncoder)) {
+        if (!auth.isLoginCorrect(loginRequest, passwordEncoder)) {
             throw new BadCredentialsException("user or password is invalid");
         }
         Instant now = Instant.now();
-        long expiresIn = 300L; // TEMPO DE EXPIRAÇÃO
+        long expiresIn = 3000L; // TEMPO DE EXPIRAÇÃO
 
-        String scopes = user.getRoles().stream()
+        String scopes = auth.getRoles().stream()
                         .map(String::valueOf) // Lambda function para transformar cada "ROLE" em String
                         .collect(Collectors.joining(", "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("amparo-backend")
-                .subject(user.getId())
+                .subject(auth.getUser().getId())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
                 .claim("scope", scopes)
@@ -82,11 +84,11 @@ public class AuthController {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         // CHECA SE AS CREDENCIAL JÁ EXISTE
-        if (userService.existCredential(registerRequest.credential())){
+        if (authService.existCredential(registerRequest.credential())){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        userService.registerUser(registerRequest);
+        authService.registerUser(registerRequest);
         return ResponseEntity.ok().build();
     }
 

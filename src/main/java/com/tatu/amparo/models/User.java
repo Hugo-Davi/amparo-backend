@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.Set;
 
 @Document(collection = "users")
@@ -14,34 +15,21 @@ public class User {
     private String id;
     private String name;
 
-    private String password;
     private String email;
     private String phoneNumber;
 
     private Set<Role> roles;
 
     private String age;
-
     private String cpf;
-
     private Address address;
+
+    private List<SupportNetwork> supportNetwork;
 
     public User() {}
 
     public User(String id) {
         this.id = id;
-    }
-
-    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
-        return passwordEncoder.matches(loginRequest.password(), this.password);
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -110,5 +98,13 @@ public class User {
 
     public void addRole(Role newRole) {
         this.roles.add(newRole);
+    }
+
+    public List<SupportNetwork> getSupportNetwork() {
+        return supportNetwork;
+    }
+
+    public void setSupportNetwork(List<SupportNetwork> supportNetwork) {
+        this.supportNetwork = supportNetwork;
     }
 }
