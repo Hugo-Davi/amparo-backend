@@ -1,8 +1,7 @@
 package com.tatu.amparo.models;
 
-import com.tatu.amparo.dto.LoginRequest;
+import com.tatu.amparo.dto.auth.LoginRequest;
 import com.tatu.amparo.models.enums.Role;
-import org.springframework.data.mongodb.core.annotation.Collation;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +16,12 @@ public class Authentication {
     private Set<Role> roles;
 
     public Authentication() {}
+
+    public Authentication(User user, String password, Set<Role> roles) {
+        this.user = user;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.password(), this.password);

@@ -1,10 +1,8 @@
 package com.tatu.amparo.models;
 
-import com.tatu.amparo.dto.LoginRequest;
 import com.tatu.amparo.models.enums.Role;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Set;

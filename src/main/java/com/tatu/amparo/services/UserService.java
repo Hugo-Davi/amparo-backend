@@ -1,17 +1,12 @@
 package com.tatu.amparo.services;
 
-import com.tatu.amparo.dto.RegisterRequest;
-import com.tatu.amparo.models.SupportNetwork;
 import com.tatu.amparo.models.User;
-import com.tatu.amparo.models.enums.Role;
 import com.tatu.amparo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
 
 @Service
 public class UserService {
