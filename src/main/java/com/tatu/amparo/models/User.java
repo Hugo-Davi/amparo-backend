@@ -1,12 +1,14 @@
 package com.tatu.amparo.models;
 
 import com.tatu.amparo.models.enums.Role;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Set;
 
+@Getter
 @Document(collection = "users")
 public class User {
     @Id
@@ -30,64 +32,32 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAge() {
-        return age;
     }
 
     public void setAge(String age) {
         this.age = age;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public String getCpf() {
-        return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
     }
 
     public void setRoles(Set<Role> roles) {
@@ -96,10 +66,6 @@ public class User {
 
     public void addRole(Role newRole) {
         this.roles.add(newRole);
-    }
-
-    public List<SupportNetwork> getSupportNetwork() {
-        return supportNetwork;
     }
 
     public void setSupportNetwork(List<SupportNetwork> supportNetwork) {

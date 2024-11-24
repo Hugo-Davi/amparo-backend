@@ -1,5 +1,6 @@
 package com.tatu.amparo.models;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -8,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
 @Document(collection = "posts")
 public class Post {
     @Setter
@@ -28,36 +30,8 @@ public class Post {
     @Setter
     private List<Comment> comments;
 
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public String getCreationDate() {
-        return this.creationDate;
-    }
-
     public void setCreationDate() {
         this.creationDate = LocalDateTime.now().toString();
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public List<String> getContent() {
-        return content;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 
 }

@@ -1,11 +1,11 @@
 package com.tatu.amparo.controllers;
 
-import com.tatu.amparo.dto.auth.LoginRequest;
-import com.tatu.amparo.dto.auth.LoginResponse;
-import com.tatu.amparo.dto.auth.RegisterRequest;
+import com.tatu.amparo.dto.auth.*;
 import com.tatu.amparo.models.Authentication;
+import com.tatu.amparo.models.RefreshToken;
 import com.tatu.amparo.services.AuthService;
 import com.tatu.amparo.services.JwtService;
+import com.tatu.amparo.services.RefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.sql.Ref;
 
 import static java.util.stream.StreamSupport.stream;
 
@@ -41,6 +43,9 @@ public class AuthController {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+
     @Operation(summary = "Login", method = "POST")
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
@@ -54,12 +59,17 @@ public class AuthController {
             throw new BadCredentialsException("user or password is invalid");
         }
 
-        return ResponseEntity.ok(jwtService.generateJwtToken(auth));
+        return ResponseEntity.ok(
+                new LoginResponse(
+                        jwtService.generateJwtToken(auth),
+                        refreshTokenService.generateRefreshToken(auth.getUser().getId())
+                    )
+                );
     }
 
     @Transactional
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> register(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest){
         if (registerRequest.credential().length() == 0) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -68,8 +78,36 @@ public class AuthController {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        authService.registerUser(registerRequest);
-        return ResponseEntity.ok().build();
+        Authentication auth = authService.registerUser(registerRequest);
+        return ResponseEntity.ok(
+                new RegisterResponse(
+                        jwtService.generateJwtToken(auth),
+                        refreshTokenService.generateRefreshToken(auth.getUser().getId())
+                )
+        );
+    }
+
+    @Transactional
+    @RequestMapping(value = "/refresh", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RefreshResponse> refresh(@RequestBody RefreshRequest refreshRequest){
+        if (refreshRequest.credential().length() == 0) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        // CHECA SE CREDENTIAL EXISTE
+        if (!authService.existCredential(refreshRequest.credential())){
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        Authentication auth = authService.findByCredential(refreshRequest.credential());
+        RefreshToken refreshToken = refreshTokenService.getRefreshToken(refreshRequest.refreshToken(), auth.getUser().getId());
+        if (refreshToken.getToken().length() == 0) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return ResponseEntity.ok(
+                new RefreshResponse(
+                        jwtService.generateJwtToken(auth),
+                        refreshTokenService.generateRefreshToken(refreshToken.getUser().getId())
+                )
+        );
     }
 
 }

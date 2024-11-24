@@ -6,6 +6,9 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.tatu.amparo.dto.auth.LoginResponse;
 import com.tatu.amparo.models.Authentication;
+import com.tatu.amparo.models.RefreshToken;
+import com.tatu.amparo.repositories.RefreshTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.jwt.*;
@@ -41,7 +44,7 @@ public class JwtService {
         return new NimbusJwtEncoder(jwks);
     }
 
-    public LoginResponse generateJwtToken(Authentication auth) {
+    public String generateJwtToken(Authentication auth) {
         Instant now = Instant.now();
 
         String scopes = auth.getRoles().stream()
@@ -58,8 +61,12 @@ public class JwtService {
 
         String jwtValue = jwtEncoder().encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return new LoginResponse(jwtValue, this.expiresIn);
+        return jwtValue;
     }
+
+
+
+
 //    public static final String SECRET = "AbrnosrmBF9Kka5LGLs3GcHjOKqWi1g0lYlk32YEp7K5W9tZqr2x3Xlz";
 //
 //    public String generateToken(String userName){

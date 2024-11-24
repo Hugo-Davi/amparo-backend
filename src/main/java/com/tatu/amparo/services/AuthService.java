@@ -50,7 +50,7 @@ public class AuthService {
         authRepository.save(auth);
     }
 
-    public User registerUser(RegisterRequest registerRequest) {
+    public Authentication registerUser(RegisterRequest registerRequest) {
         User user = new User();
         if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(registerRequest.credential()).matches()) {
             user.setEmail(registerRequest.credential());
@@ -67,8 +67,7 @@ public class AuthService {
         auth.setRoles(Set.of(Role.USER));
         auth.setPassword(passwordEncoder.encode(registerRequest.password()));
 
-        authRepository.save(auth);
-        return createdUser;
+        return authRepository.save(auth);
     }
 
     public boolean existCredential(String credential) {
