@@ -21,13 +21,14 @@ public class SupportNetworkService {
         return supportNetworkGet.supportNetwork();
     }
 
-    public List<SupportNetwork> addSupportNetwork (String id, List<SupportNetwork> newSupportNetwork){
-        User user = userRepository.findById(id).orElse(null);
-        if(user == null) {
-            return null;
-        }
-        user.setSupportNetwork(newSupportNetwork);
-        userRepository.save(user);
+    public List<SupportNetwork> updateSupportNetwork (String id, List<SupportNetwork> newSupportNetwork){
+        userRepository.updateSupportNetwork(id, newSupportNetwork);
+//        User user = userRepository.findById(id).orElse(null);
+//        if(user == null) {
+//            return null;
+//        }
+//        user.setSupportNetwork(newSupportNetwork);
+//        userRepository.save(user);
 
         return newSupportNetwork;
     }

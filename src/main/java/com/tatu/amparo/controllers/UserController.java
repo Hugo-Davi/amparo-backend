@@ -1,5 +1,7 @@
 package com.tatu.amparo.controllers;
 
+import com.tatu.amparo.dto.user.UserCredentials;
+import com.tatu.amparo.dto.user.UserHeader;
 import com.tatu.amparo.models.Post;
 import com.tatu.amparo.models.SupportNetwork;
 import com.tatu.amparo.models.User;
@@ -58,6 +60,30 @@ public class UserController {
 
         return ResponseEntity
                 .ok(user);
+    }
+
+    @RequestMapping(value = "/header", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserHeader> updateMyUserHeader (@RequestBody UserHeader userHeader, JwtAuthenticationToken token){
+
+        if (!this.userService.existById(token.getName())){
+            return ResponseEntity.notFound().build();
+        }
+        this.userService.updateUserHeader(token.getName(), userHeader);
+
+        return ResponseEntity
+                .ok(userHeader);
+    }
+
+    @RequestMapping(value = "/credential", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserCredentials> updateMyUserCredentials (@RequestBody UserCredentials userCredentials, JwtAuthenticationToken token){
+
+        if (!this.userService.existById(token.getName())){
+            return ResponseEntity.notFound().build();
+        }
+        this.userService.updateUserCredentials(token.getName(), userCredentials);
+
+        return ResponseEntity
+                .ok(userCredentials);
     }
 
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")

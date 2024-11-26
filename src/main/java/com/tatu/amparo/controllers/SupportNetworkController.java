@@ -34,11 +34,11 @@ public class SupportNetworkController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SupportNetwork>> removeSupportNetwork (@RequestBody List<SupportNetwork> supportNetwork, JwtAuthenticationToken token) {
+    public ResponseEntity<List<SupportNetwork>> updateSupportNetwork (@RequestBody List<SupportNetwork> supportNetwork, JwtAuthenticationToken token) {
         if(token.getName() == null){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
-        return ResponseEntity.ok(this.service.addSupportNetwork(token.getName(), supportNetwork));
+        return ResponseEntity.ok(this.service.updateSupportNetwork(token.getName(), supportNetwork));
     }
 }
