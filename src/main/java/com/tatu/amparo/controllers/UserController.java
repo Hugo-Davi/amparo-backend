@@ -33,12 +33,7 @@ public class UserController {
         return ResponseEntity.ok(this.userService.get(id));
     }
 
-//    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-//    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<User> create (@RequestBody User user){
-//        return ResponseEntity.ok(this.userService.save(user));
-//    }
-
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> update (@PathVariable("id") String id, @RequestBody User user){
 
@@ -46,7 +41,20 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         user.setId(id);
-        //this.service.save(user);
+        this.userService.update(user);
+
+        return ResponseEntity
+                .ok(user);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> updateMe (@RequestBody User user, JwtAuthenticationToken token){
+
+        if (!this.userService.existById(token.getName())){
+            return ResponseEntity.notFound().build();
+        }
+        user.setId(token.getName());
+        this.userService.update(user);
 
         return ResponseEntity
                 .ok(user);
