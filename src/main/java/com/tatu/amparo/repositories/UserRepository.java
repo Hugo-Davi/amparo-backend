@@ -24,11 +24,20 @@ public interface UserRepository extends MongoRepository<User, String> {
     User findByPhoneNumber(String phoneNumber);
 
     @Query(value = "{ '_id' : ?0 }")
-    @Update(pipeline = {"{ '$set' : { name : ?1, description : ?2, age : ?3, address : ?4  } }"})
+    @Update(pipeline = {"{ '$set' : { " +
+                            "name : {$cond:{if:{$ne: [?1, '']}, then: ?1, else: '$name'}}" +
+                            "description : {$cond:{if:{$ne: [?2, '']}, then: ?2, else: '$description'}}" +
+                            "age : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$age'}}" +
+                            "address : {$cond:{if:{$ne: [?4, '']}, then: ?4, else: '$address'}}" +
+                        "} }"})
     void updateUserHeader(String id, String name, String description, String age, Address address);
 
     @Query(value = "{ '_id' : ?0 }")
-    @Update(pipeline = {"{ '$set' : { cpf : ?1, phoneNumber : ?2, email : ?3  } }"})
+    @Update(pipeline = {"{ '$set' : { " +
+                            "cpf : {$cond:{if:{$ne: [?1, '']}, then: ?1, else: '$name'}}" +
+                            "phoneNumber : {$cond:{if:{$ne: [?2, '']}, then: ?2, else: '$phoneNumber'}}" +
+                            "email : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$email'}}" +
+                            "} }"})
     void updateUserCredentials(String id, String cpf, String phoneNumber, String email);
 
     @Query(value = "{ '_id' : ?0 }", fields = "{ 'supportNetwork' : 1 }")
