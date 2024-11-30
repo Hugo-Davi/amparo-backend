@@ -30,6 +30,8 @@ public class Post {
     @Setter
     private List<Comment> comments;
 
+    public Post () {}
+
     public void setCreationDate() {
         this.creationDate = LocalDateTime.now().toString();
     }

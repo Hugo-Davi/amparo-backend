@@ -36,22 +36,11 @@ public class PostService {
 
     public Post createPost(Post post) {
         post.setCreationDate();
+        post.setComments(new ArrayList<>());
         return repository.save(post);
     }
 
-    public void postComment(String id, Comment comment, String userId) {
-        Post post = this.get(id);
-        // define como data de agora
-        comment.setCommentDate();
-        List<Comment> newComments = post.getComments();
-        // Se não existe uma sessão de comentários, cria uma vazia
-        if (newComments == null) {
-            newComments = new ArrayList<>();
-        }
-        newComments.add(comment);
-        post.setComments(newComments);
-
-        // atualiza todo o documento de post, porém com um novo comentário
-        this.update(post);
+    public List<Post> getPostByCreator(String userId) {
+        return repository.getPostByCreator(userId).orElse(null);
     }
 }

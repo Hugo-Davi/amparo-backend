@@ -1,8 +1,10 @@
 package com.tatu.amparo.controllers;
 
+import com.tatu.amparo.dto.post.CommentAddRequest;
 import com.tatu.amparo.models.Comment;
 import com.tatu.amparo.models.Post;
 import com.tatu.amparo.models.User;
+import com.tatu.amparo.services.CommentService;
 import com.tatu.amparo.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,17 @@ public class PostController {
     @Autowired
     private PostService service;
 
+    @Autowired
+    private CommentService commentService;
+
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> getMy (JwtAuthenticationToken token){
+        if(token.getName() == null){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        return ResponseEntity.ok(this.service.getPostByCreator(token.getName()));
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> getAll (){
         return ResponseEntity.ok(this.service.getAll());
@@ -36,7 +49,6 @@ public class PostController {
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Post> create (@RequestBody Post post, JwtAuthenticationToken token){
 
-        System.out.println(token.getName());
         if(token.getName() == null){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -71,8 +83,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/{id}/comment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Comment> postComment (@PathVariable String id, @RequestBody Comment comment, JwtAuthenticationToken token){
-        this.service.postComment(id, comment, token.getName());
-        return ResponseEntity.ok(comment);
+    public ResponseEntity<Void> postComment (@PathVariable String id, @RequestBody CommentAddRequest commentAddRequest, JwtAuthenticationToken token){
+        this.commentService.postComment(id, commentAddRequest.text(), token.getName());
+        return ResponseEntity.ok().build();
     }
 }

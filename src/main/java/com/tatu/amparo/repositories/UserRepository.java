@@ -23,6 +23,20 @@ public interface UserRepository extends MongoRepository<User, String> {
     @Query("{ 'phoneNumber' : ?0 }")
     User findByPhoneNumber(String phoneNumber);
 
+//    @Query(value = "{ '_id' : ?0 }")
+//    @Update(pipeline = {"{ '$set' : { " +
+//            "name : {$cond:{if:{$ne: [?1, '']}, then: ?1, else: '$name'}}" +
+//            "description : {$cond:{if:{$ne: [?2, '']}, then: ?2, else: '$description'}}" +
+//            "age : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$age'}}" +
+//            "address : {$cond:{if:{$ne: [?4, '']}, then: ?4, else: '$address'}}" +
+//            "cpf : {$cond:{if:{$ne: [?5, '']}, then: ?5, else: '$name'}}" +
+//            "phoneNumber : {$cond:{if:{$ne: [?6, '']}, then: ?6, else: '$phoneNumber'}}" +
+//            "email : {$cond:{if:{$ne: [?7, '']}, then: ?7, else: '$email'}}" +
+//            "} }"})
+//    void updateUser(String id,
+//                    String name, String description, String age, Address address,
+//                    String cpf, String phoneNumber, String email);
+
     @Query(value = "{ '_id' : ?0 }")
     @Update(pipeline = {"{ '$set' : { " +
                             "name : {$cond:{if:{$ne: [?1, '']}, then: ?1, else: '$name'}}" +
