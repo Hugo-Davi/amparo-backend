@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -55,6 +56,7 @@ public class AuthService {
         if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(registerRequest.credential()).matches()) {
             user.setEmail(registerRequest.credential());
         } else { user.setPhoneNumber(registerRequest.credential()); }
+        user.setSupportNetwork(new ArrayList<>());
 
         // check if user was created
         User createdUser = userRepository.save(user);
