@@ -44,6 +44,6 @@ public interface UserRepository extends MongoRepository<User, String> {
      SupportNetworkGet getSupportNetwork(String id);
 
     @Query(value = "{ '_id' : ?0 }", fields = "{ 'supportNetwork' : 1 }")
-    @Update(pipeline = {"{ '$set' supportNetworks : ?1 }"})
-    void updateSupportNetwork(String id, List<SupportNetwork> supportNetworks);
+    @Update(pipeline = {"{ '$set': { supportNetwork : ?1 } }"})
+    void updateSupportNetwork(String id, List<SupportNetwork> supportNetwork);
 }

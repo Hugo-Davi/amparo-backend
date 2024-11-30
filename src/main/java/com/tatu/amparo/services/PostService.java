@@ -39,7 +39,7 @@ public class PostService {
         return repository.save(post);
     }
 
-    public void postComment(String id, Comment comment) {
+    public void postComment(String id, Comment comment, String userId) {
         Post post = this.get(id);
         // define como data de agora
         comment.setCommentDate();

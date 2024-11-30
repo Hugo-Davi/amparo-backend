@@ -71,8 +71,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/{id}/comment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Comment> createComment (@PathVariable String id, @RequestBody Comment comment){
-        this.service.postComment(id, comment);
+    public ResponseEntity<Comment> postComment (@PathVariable String id, @RequestBody Comment comment, JwtAuthenticationToken token){
+        this.service.postComment(id, comment, token.getName());
         return ResponseEntity.ok(comment);
     }
 }
