@@ -1,6 +1,6 @@
 package com.tatu.amparo.dto.user;
 
-import com.tatu.amparo.models.SupportNetwork;
+import com.tatu.amparo.models.fields.SupportNetwork;
 
 import java.util.List;
 

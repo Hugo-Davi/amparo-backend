@@ -1,16 +1,11 @@
 package com.tatu.amparo.config;
 
-import com.tatu.amparo.models.User;
-import com.tatu.amparo.models.enums.Role;
-import com.tatu.amparo.services.AuthService;
-import com.tatu.amparo.services.UserService;
+import com.tatu.amparo.models.collections.User;
+import com.tatu.amparo.services.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.List;
-import java.util.Set;
 
 @Configuration
 public class AdminUserConfig implements CommandLineRunner {

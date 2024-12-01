@@ -1,8 +1,7 @@
-package com.tatu.amparo.services;
+package com.tatu.amparo.services.social;
 
-import com.tatu.amparo.models.Comment;
-import com.tatu.amparo.models.Post;
-import com.tatu.amparo.models.User;
+import com.tatu.amparo.models.fields.Comment;
+import com.tatu.amparo.models.collections.User;
 import com.tatu.amparo.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

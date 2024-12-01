@@ -1,13 +1,10 @@
-package com.tatu.amparo.services;
+package com.tatu.amparo.services.social;
 
-import com.tatu.amparo.models.Comment;
-import com.tatu.amparo.models.Post;
-import com.tatu.amparo.models.User;
+import com.tatu.amparo.models.collections.Post;
 import com.tatu.amparo.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

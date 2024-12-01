@@ -1,4 +1,4 @@
-package com.tatu.amparo.models;
+package com.tatu.amparo.models.collections;
 
 import com.tatu.amparo.dto.auth.LoginRequest;
 import com.tatu.amparo.models.enums.Role;

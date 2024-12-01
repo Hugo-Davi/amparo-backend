@@ -1,14 +1,13 @@
-package com.tatu.amparo.models;
+package com.tatu.amparo.models.collections;
 
-import com.tatu.amparo.models.enums.Role;
+import com.tatu.amparo.models.fields.Address;
+import com.tatu.amparo.models.fields.SupportNetwork;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

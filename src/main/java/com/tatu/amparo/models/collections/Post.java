@@ -1,5 +1,6 @@
-package com.tatu.amparo.models;
+package com.tatu.amparo.models.collections;
 
+import com.tatu.amparo.models.fields.Comment;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

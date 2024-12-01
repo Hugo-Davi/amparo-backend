@@ -2,9 +2,7 @@ package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.dto.user.UserCredentials;
 import com.tatu.amparo.dto.user.UserHeader;
-import com.tatu.amparo.models.Post;
-import com.tatu.amparo.models.SupportNetwork;
-import com.tatu.amparo.models.User;
+import com.tatu.amparo.models.collections.User;
 import com.tatu.amparo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

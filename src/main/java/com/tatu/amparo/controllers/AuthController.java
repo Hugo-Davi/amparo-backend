@@ -1,11 +1,11 @@
 package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.dto.auth.*;
-import com.tatu.amparo.models.Authentication;
-import com.tatu.amparo.models.RefreshToken;
-import com.tatu.amparo.services.AuthService;
-import com.tatu.amparo.services.JwtService;
-import com.tatu.amparo.services.RefreshTokenService;
+import com.tatu.amparo.models.collections.Authentication;
+import com.tatu.amparo.models.collections.RefreshToken;
+import com.tatu.amparo.services.auth.AuthService;
+import com.tatu.amparo.services.auth.JwtService;
+import com.tatu.amparo.services.auth.RefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.sql.Ref;
 
 import static java.util.stream.StreamSupport.stream;
 

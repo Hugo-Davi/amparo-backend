@@ -1,10 +1,10 @@
-package com.tatu.amparo.models;
+package com.tatu.amparo.models.fields;
 
+import com.tatu.amparo.models.collections.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

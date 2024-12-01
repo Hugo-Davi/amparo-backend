@@ -1,19 +1,16 @@
 package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.dto.post.CommentAddRequest;
-import com.tatu.amparo.models.Comment;
-import com.tatu.amparo.models.Post;
-import com.tatu.amparo.models.User;
-import com.tatu.amparo.services.CommentService;
-import com.tatu.amparo.services.PostService;
+import com.tatu.amparo.models.collections.Post;
+import com.tatu.amparo.models.collections.User;
+import com.tatu.amparo.services.social.CommentService;
+import com.tatu.amparo.services.social.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

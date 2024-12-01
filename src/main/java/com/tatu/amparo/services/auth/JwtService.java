@@ -1,14 +1,10 @@
-package com.tatu.amparo.services;
+package com.tatu.amparo.services.auth;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import com.tatu.amparo.dto.auth.LoginResponse;
-import com.tatu.amparo.models.Authentication;
-import com.tatu.amparo.models.RefreshToken;
-import com.tatu.amparo.repositories.RefreshTokenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tatu.amparo.models.collections.Authentication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.jwt.*;

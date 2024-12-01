@@ -1,4 +1,4 @@
-package com.tatu.amparo.models;
+package com.tatu.amparo.models.fields;
 
 import com.tatu.amparo.models.enums.Relation;
 import lombok.Getter;

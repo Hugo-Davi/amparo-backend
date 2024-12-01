@@ -1,6 +1,6 @@
-package com.tatu.amparo.services;
+package com.tatu.amparo.services.support;
 
-import com.tatu.amparo.models.Denounce;
+import com.tatu.amparo.models.collections.Denounce;
 import com.tatu.amparo.repositories.DenounceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

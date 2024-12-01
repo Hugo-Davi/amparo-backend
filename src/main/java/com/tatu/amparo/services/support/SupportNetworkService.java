@@ -1,14 +1,11 @@
-package com.tatu.amparo.services;
+package com.tatu.amparo.services.support;
 
 import com.tatu.amparo.dto.user.SupportNetworkGet;
-import com.tatu.amparo.models.Comment;
-import com.tatu.amparo.models.SupportNetwork;
-import com.tatu.amparo.models.User;
+import com.tatu.amparo.models.fields.SupportNetwork;
 import com.tatu.amparo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

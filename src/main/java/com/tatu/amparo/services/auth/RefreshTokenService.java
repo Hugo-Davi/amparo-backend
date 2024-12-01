@@ -1,13 +1,12 @@
-package com.tatu.amparo.services;
+package com.tatu.amparo.services.auth;
 
-import com.tatu.amparo.models.RefreshToken;
-import com.tatu.amparo.models.User;
+import com.tatu.amparo.models.collections.RefreshToken;
+import com.tatu.amparo.models.collections.User;
 import com.tatu.amparo.repositories.RefreshTokenRepository;
 import com.tatu.amparo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Service

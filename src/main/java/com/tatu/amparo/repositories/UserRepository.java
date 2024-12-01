@@ -1,9 +1,9 @@
 package com.tatu.amparo.repositories;
 
 import com.tatu.amparo.dto.user.SupportNetworkGet;
-import com.tatu.amparo.models.Address;
-import com.tatu.amparo.models.SupportNetwork;
-import com.tatu.amparo.models.User;
+import com.tatu.amparo.models.fields.Address;
+import com.tatu.amparo.models.fields.SupportNetwork;
+import com.tatu.amparo.models.collections.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;

@@ -1,6 +1,6 @@
 package com.tatu.amparo.repositories;
 
-import com.tatu.amparo.models.RefreshToken;
+import com.tatu.amparo.models.collections.RefreshToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

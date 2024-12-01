@@ -1,4 +1,4 @@
-package com.tatu.amparo.models;
+package com.tatu.amparo.models.fields;
 
 import lombok.Getter;
 import lombok.Setter;

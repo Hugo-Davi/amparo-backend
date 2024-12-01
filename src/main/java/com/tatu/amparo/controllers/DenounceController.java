@@ -1,8 +1,7 @@
 package com.tatu.amparo.controllers;
 
-import com.google.gson.Gson;
-import com.tatu.amparo.models.Denounce;
-import com.tatu.amparo.services.DenounceService;
+import com.tatu.amparo.models.collections.Denounce;
+import com.tatu.amparo.services.support.DenounceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

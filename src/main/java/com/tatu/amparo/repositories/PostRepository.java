@@ -1,7 +1,7 @@
 package com.tatu.amparo.repositories;
 
-import com.tatu.amparo.models.Comment;
-import com.tatu.amparo.models.Post;
+import com.tatu.amparo.models.fields.Comment;
+import com.tatu.amparo.models.collections.Post;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;

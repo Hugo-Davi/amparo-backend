@@ -1,8 +1,7 @@
 package com.tatu.amparo.controllers;
 
-import com.tatu.amparo.models.SupportNetwork;
-import com.tatu.amparo.models.User;
-import com.tatu.amparo.services.SupportNetworkService;
+import com.tatu.amparo.models.fields.SupportNetwork;
+import com.tatu.amparo.services.support.SupportNetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
