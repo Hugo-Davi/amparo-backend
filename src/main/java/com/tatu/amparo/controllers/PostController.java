@@ -69,18 +69,20 @@ public class PostController {
                 .ok(post);
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Post> delete(@PathVariable String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         Post post = this.service.get(id);
         if (post == null) {
             return ResponseEntity.notFound().build();
         }
         this.service.delete(id);
         return ResponseEntity
-                .ok(post);
+                .ok().build();
     }
 
     @RequestMapping(value = "/{id}/comment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> postComment (@PathVariable String id, @RequestBody CommentAddRequest commentAddRequest, JwtAuthenticationToken token){
+    public ResponseEntity<Void> postComment (@PathVariable String id,
+                                             @RequestBody CommentAddRequest commentAddRequest,
+                                             JwtAuthenticationToken token) {
         this.commentService.postComment(id, commentAddRequest.text(), token.getName());
         return ResponseEntity.ok().build();
     }
