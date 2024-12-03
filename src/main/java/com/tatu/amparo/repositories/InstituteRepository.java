@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
 
+import java.util.List;
+
 public interface InstituteRepository extends MongoRepository<Institute, String> {
     @Query(value = "{ id : ?0 }")
     @Update(pipeline = {"{ '$set' : { " +
@@ -15,4 +17,13 @@ public interface InstituteRepository extends MongoRepository<Institute, String> 
                             "location : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$location'}}" +
                         "} }"})
     void updateInstitute(String id, String name, String description, Location location);
+
+    @Query(value = "{ location: { $near: { " +
+                                    "$geometry: { type : 'Point', coordinates: [?0, ?1] }, " +
+                                    "$maxDistance: 10," +
+                                    "$minDistance: 0," +
+                                "}" +
+                            "}" +
+                        "}")
+    List<Institute> getNear(Double longitude, Double latitude);
 }

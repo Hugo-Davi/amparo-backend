@@ -2,6 +2,7 @@ package com.tatu.amparo.services.support;
 
 import com.tatu.amparo.dto.institute.CreateInstituteRequest;
 import com.tatu.amparo.dto.institute.UpdateInstituteRequest;
+import com.tatu.amparo.dto.location.LocationRequest;
 import com.tatu.amparo.models.collections.Institute;
 import com.tatu.amparo.models.collections.Post;
 import com.tatu.amparo.models.collections.User;
@@ -46,7 +47,7 @@ public class InstituteService {
         );
     }
 
-//    public List<Institute> getNearby(Location location) {
-//        return;
-//    }
+    public List<Institute> getNear(LocationRequest location) {
+        return repository.getNear(location.longitude(), location.latitude());
+    }
 }

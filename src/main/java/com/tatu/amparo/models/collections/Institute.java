@@ -5,6 +5,7 @@ import com.tatu.amparo.models.fields.Location;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,6 +22,7 @@ public class Institute {
     private String description;
     @DBRef
     private List<User> admins;
+    @GeoSpatialIndexed
     private Location location;
 
     public boolean hasAdmin(String userId) {

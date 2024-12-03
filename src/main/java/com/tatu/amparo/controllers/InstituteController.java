@@ -2,6 +2,7 @@ package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.dto.institute.CreateInstituteRequest;
 import com.tatu.amparo.dto.institute.UpdateInstituteRequest;
+import com.tatu.amparo.dto.location.LocationRequest;
 import com.tatu.amparo.models.collections.Institute;
 import com.tatu.amparo.models.collections.Post;
 import com.tatu.amparo.models.collections.User;
@@ -76,8 +77,8 @@ public class InstituteController {
         return ResponseEntity.ok().build();
     }
 
-//    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<List<Institute>> getInstitutesNearby (@RequestBody Location location) {
-//        return ResponseEntity.ok(this.service.getNearby(location));
-//    }
+    @RequestMapping(value = "/near", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Institute>> getInstitutesNearby (@RequestBody LocationRequest location) {
+        return ResponseEntity.ok(this.service.getNear(location));
+    }
 }
