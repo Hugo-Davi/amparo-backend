@@ -1,6 +1,7 @@
 package com.tatu.amparo.controllers;
 
 import com.tatu.amparo.models.collections.Denounce;
+import com.tatu.amparo.models.collections.User;
 import com.tatu.amparo.services.support.DenounceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,7 +29,7 @@ public class DenounceController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create (@RequestBody Denounce denounce, JwtAuthenticationToken token){
-        denounce.setUser(token.getName());
+        denounce.setUser(new User(token.getName()));
         this.service.save(denounce);
         return ResponseEntity.ok().build();
     }

@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import static java.util.stream.StreamSupport.stream;
-
-
 @RestController
 @RequestMapping(value = "/auth")
 @Tag(name = "amparo")
@@ -48,7 +45,7 @@ public class AuthController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
-        Authentication auth = authService.findByCredential(loginRequest.credential()); // Espera uma Lista de 1 ocorrência
+        Authentication auth = authService.findByCredential(loginRequest.credential());
 
         if (auth == null){
             throw new BadCredentialsException("user or password is invalid");

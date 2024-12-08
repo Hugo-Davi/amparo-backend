@@ -7,35 +7,23 @@ import com.tatu.amparo.models.collections.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{ 'name' : ?0 }")
-    List<User> findByUsername(String username);
+    List<User> findByUsername(@Param("username") String username);
 
     @Query("{ 'email' : ?0 }")
-    User findByEmail(String email);
+    Optional<User> findByEmail(@Param("email") String email);
 
     @Query("{ 'phoneNumber' : ?0 }")
-    User findByPhoneNumber(String phoneNumber);
-
-//    @Query(value = "{ '_id' : ?0 }")
-//    @Update(pipeline = {"{ '$set' : { " +
-//            "name : {$cond:{if:{$ne: [?1, '']}, then: ?1, else: '$name'}}" +
-//            "description : {$cond:{if:{$ne: [?2, '']}, then: ?2, else: '$description'}}" +
-//            "age : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$age'}}" +
-//            "address : {$cond:{if:{$ne: [?4, '']}, then: ?4, else: '$address'}}" +
-//            "cpf : {$cond:{if:{$ne: [?5, '']}, then: ?5, else: '$name'}}" +
-//            "phoneNumber : {$cond:{if:{$ne: [?6, '']}, then: ?6, else: '$phoneNumber'}}" +
-//            "email : {$cond:{if:{$ne: [?7, '']}, then: ?7, else: '$email'}}" +
-//            "} }"})
-//    void updateUser(String id,
-//                    String name, String description, String age, Address address,
-//                    String cpf, String phoneNumber, String email);
+    Optional<User> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     @Query(value = "{ '_id' : ?0 }")
     @Update(pipeline = {"{ '$set' : { " +
@@ -44,7 +32,11 @@ public interface UserRepository extends MongoRepository<User, String> {
                             "age : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$age'}}" +
                             "address : {$cond:{if:{$ne: [?4, '']}, then: ?4, else: '$address'}}" +
                         "} }"})
-    void updateUserHeader(String id, String name, String description, String age, Address address);
+    void updateUserHeader(@Param("id") String id,
+                          @Param("name") String name,
+                          @Param("description") String description,
+                          @Param("age") String age,
+                          @Param("address") Address address);
 
     @Query(value = "{ '_id' : ?0 }")
     @Update(pipeline = {"{ '$set' : { " +
@@ -52,12 +44,16 @@ public interface UserRepository extends MongoRepository<User, String> {
                             "phoneNumber : {$cond:{if:{$ne: [?2, '']}, then: ?2, else: '$phoneNumber'}}" +
                             "email : {$cond:{if:{$ne: [?3, '']}, then: ?3, else: '$email'}}" +
                             "} }"})
-    void updateUserCredentials(String id, String cpf, String phoneNumber, String email);
+    void updateUserCredentials(@Param("id") String id,
+                               @Param("cpf") String cpf,
+                               @Param("phoneNumber") String phoneNumber,
+                               @Param("email") String email);
 
     @Query(value = "{ '_id' : ?0 }", fields = "{ 'supportNetwork' : 1 }")
-     SupportNetworkGet getSupportNetwork(String id);
+     SupportNetworkGet getSupportNetwork(@Param("id") String id);
 
     @Query(value = "{ '_id' : ?0 }", fields = "{ 'supportNetwork' : 1 }")
     @Update(pipeline = {"{ '$set': { supportNetwork : ?1 } }"})
-    void updateSupportNetwork(String id, List<SupportNetwork> supportNetwork);
+    void updateSupportNetwork(@Param("id") String id,
+                              @Param("supportNetwork") List<SupportNetwork> supportNetwork);
 }

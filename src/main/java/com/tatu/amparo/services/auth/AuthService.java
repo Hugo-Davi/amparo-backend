@@ -95,9 +95,17 @@ public class AuthService {
 
     public Authentication findByCredential(String credential) {
         if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(credential).matches()){
-            return authRepository.findByUser(userRepository.findByEmail(credential).getId());
+            User user = userRepository.findByEmail(credential).orElse(null);
+            if (user == null) {
+                return null;
+            }
+            return authRepository.findByUser(user.getId()).orElse(null);
         }
-        return authRepository.findByUser(userRepository.findByPhoneNumber(credential).getId()) ;
+        User user = userRepository.findByPhoneNumber(credential).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        return authRepository.findByUser(user.getId()).orElse(null);
     }
 
 

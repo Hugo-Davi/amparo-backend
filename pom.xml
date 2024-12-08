@@ -11,7 +11,7 @@
 	<groupId>com.tatu</groupId>
 	<artifactId>amparo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mulher</name>
+	<name>amparo</name>
 	<description>Projeto contra a violência doméstica contra mulheres.</description>
 	<url/>
 	<licenses>
@@ -102,11 +102,6 @@
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-surefire-plugin</artifactId>
 			<version>3.5.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-			<version>2.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>

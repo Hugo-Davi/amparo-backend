@@ -16,11 +16,20 @@ public class IndexDbConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         var mongoClient = MongoClients.create(this.uri);
         var database = mongoClient.getDatabase("mulher");
-        var collection = database.getCollection("institutes");
+        var instCollection = database.getCollection("institutes");
+        var denounceCollection = database.getCollection("denounces");
 
         try {
-            String resultCreateIndex = collection.createIndex(Indexes.geo2dsphere("location"));
-            System.out.println(String.format("Index created: %s", resultCreateIndex));
+            String resultCreateIndex = instCollection.createIndex(Indexes.geo2dsphere("location"));
+            System.out.println(String.format("Index created: " + resultCreateIndex +" at institutes collection"));
+        } catch (MongoCommandException e) {
+            if (e.getErrorCodeName().equals("IndexOptionsConflict"))
+                System.out.println("there's an existing text index with different options");
+        }
+
+        try {
+            String resultCreateIndex = denounceCollection.createIndex(Indexes.geo2dsphere("location"));
+            System.out.println(String.format("Index created: "+ resultCreateIndex +" at denounces collection"));
         } catch (MongoCommandException e) {
             if (e.getErrorCodeName().equals("IndexOptionsConflict"))
                 System.out.println("there's an existing text index with different options");

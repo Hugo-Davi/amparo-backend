@@ -48,6 +48,6 @@ public class InstituteService {
     }
 
     public List<Institute> getNear(LocationRequest location) {
-        return repository.getNear(location.longitude(), location.latitude());
+        return repository.getNear(location.longitude(),location.latitude());
     }
 }
