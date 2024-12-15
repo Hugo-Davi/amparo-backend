@@ -20,4 +20,7 @@ public class FollowService {
     public void unfollow(String followerId, String followedId) {
         repository.deleteFollow(followerId, followedId);
     }
+    public Boolean existFollow (String followerId, String followedId){
+        return repository.getFollow(followerId, followedId);
+    }
 }

@@ -4,6 +4,7 @@ import com.tatu.amparo.dto.user.SupportNetworkGet;
 import com.tatu.amparo.models.fields.Address;
 import com.tatu.amparo.models.fields.SupportNetwork;
 import com.tatu.amparo.models.collections.User;
+import org.springframework.data.mongodb.repository.ExistsQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
@@ -21,6 +22,13 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{ 'email' : ?0 }")
     Optional<User> findByEmail(@Param("email") String email);
+
+    @ExistsQuery("{ 'email' : ?0 }")
+    Boolean existEmail(@Param("email") String email);
+
+    @ExistsQuery("{ 'phoneNumber' : ?0 }")
+    Boolean existPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
 
     @Query("{ 'phoneNumber' : ?0 }")
     Optional<User> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);

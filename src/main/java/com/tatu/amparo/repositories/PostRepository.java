@@ -20,7 +20,6 @@ public interface PostRepository extends MongoRepository<Post, String> {
     @Query(value = "{ creator : ?0 }")
     Optional<List<Post>> getPostByCreator(@Param("id") String id);
 
-    @Query(value = "[{ creator : { $in : ?0 } }," +
-                    " { _id: 0, creator : 1}]")
+    @Query(value = "{ creator : { $in : ?0 } }")
     Optional<List<Post>> getPostByCreators(@Param("creators") List<String> creators);
 }

@@ -76,7 +76,7 @@ public class AuthService {
         // Credential is a email?
         if (Pattern.compile("^(.*)@(.*)\\.com$", Pattern.CASE_INSENSITIVE).matcher(credential).matches()){
             // Credential exist in email?
-            if (userRepository.findByEmail(credential) == null) {
+            if (!userRepository.existEmail(credential)) {
                 return false;
             }
             return true;
@@ -84,7 +84,7 @@ public class AuthService {
         // Credential is a Phone Number?
         if (Pattern.compile("^\\d+$", Pattern.CASE_INSENSITIVE).matcher(credential).matches()) {
             // Credential exist in phone number?
-            if (userRepository.findByPhoneNumber(credential) == null) {
+            if (!userRepository.existPhoneNumber(credential)) {
                 return false;
             }
             return true;

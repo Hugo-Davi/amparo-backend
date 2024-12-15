@@ -24,6 +24,9 @@ public class FollowController {
         if (token.getName() == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+        if (this.service.existFollow(token.getName(), followedId)){
+            throw new ResponseStatusException(HttpStatus.FOUND);
+        }
         this.service.follow(token.getName(), followedId);
         return ResponseEntity.ok().build();
     }

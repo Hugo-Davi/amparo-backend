@@ -1,5 +1,6 @@
 package com.tatu.amparo.services.social;
 
+import com.tatu.amparo.dto.follow.FollowGetByFollower;
 import com.tatu.amparo.models.collections.Post;
 import com.tatu.amparo.repositories.FollowRepository;
 import com.tatu.amparo.repositories.PostRepository;
@@ -41,15 +42,17 @@ public class PostService {
     }
 
     public List<Post> getPostByFollows(String userId){
-        List<String> followedUsers;
+        List<FollowGetByFollower> followedUsers;
         followedUsers = followRepository.getByFollower(userId).orElse(null);
         if(followedUsers == null){
             return null;
         }
-        return repository.getPostByCreators(followedUsers).orElse(null);
+        List<String> followedIds = new ArrayList<String>();
+        for(int i = 0; i < followedUsers.size(); i++){
+           followedIds.add(i, followedUsers.get(i).followed());
+        }
+        return repository.getPostByCreators(followedIds).orElse(null);
     }
-
-
     public List<Post> getPostByCreator(String userId) {
         return repository.getPostByCreator(userId).orElse(null);
     }
