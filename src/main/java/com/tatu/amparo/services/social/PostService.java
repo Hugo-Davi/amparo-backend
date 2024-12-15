@@ -1,6 +1,7 @@
 package com.tatu.amparo.services.social;
 
 import com.tatu.amparo.models.collections.Post;
+import com.tatu.amparo.repositories.FollowRepository;
 import com.tatu.amparo.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,11 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    private PostRepository repository;
+    private FollowRepository followRepository;
 
-    public Post save(Post post) {
+    @Autowired
+    private PostRepository repository;
+ public Post save(Post post) {
         post.setCreationDate();
         post.setComments(new ArrayList<>());
         return repository.save(post);
@@ -36,6 +39,16 @@ public class PostService {
         post.setComments(new ArrayList<>());
         return repository.save(post);
     }
+
+    public List<Post> getPostByFollows(String userId){
+        List<String> followedUsers;
+        followedUsers = followRepository.getByFollower(userId).orElse(null);
+        if(followedUsers == null){
+            return null;
+        }
+        return repository.getPostByCreators(followedUsers).orElse(null);
+    }
+
 
     public List<Post> getPostByCreator(String userId) {
         return repository.getPostByCreator(userId).orElse(null);

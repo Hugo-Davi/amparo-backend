@@ -9,8 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Document(collection = "follows")
 public class Follow {
-    @DBRef
-    private User follower;
-    @DBRef
-    private User followed;
+    private String follower;
+    private String followed;
 }

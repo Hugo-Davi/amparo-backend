@@ -13,8 +13,8 @@ public class FollowService {
 
     public void follow(String followerId, String followedId){
         Follow newFollow = new Follow();
-        newFollow.setFollower(new User(followerId));
-        newFollow.setFollowed(new User(followedId));
+        newFollow.setFollower(followerId);
+        newFollow.setFollowed(followedId);
         repository.save(newFollow);
     }
     public void unfollow(String followerId, String followedId) {

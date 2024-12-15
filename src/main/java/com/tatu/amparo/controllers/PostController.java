@@ -79,6 +79,19 @@ public class PostController {
                 .ok().build();
     }
 
+    @RequestMapping(value = "/follow", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Post>> getPostByFollows(JwtAuthenticationToken token){
+        if (token.getName() == null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        List<Post> posts = this.service.getPostByFollows(token.getName());
+        if (posts == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(posts);
+    }
+
+
     @RequestMapping(value = "/{id}/comment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> postComment (@PathVariable String id,
                                              @RequestBody CommentAddRequest commentAddRequest,
