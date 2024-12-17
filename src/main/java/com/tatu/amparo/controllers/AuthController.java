@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+@Tag(name ="authentication")
 @RestController
 @RequestMapping(value = "/auth")
-@Tag(name = "amparo")
 public class AuthController {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -41,7 +41,7 @@ public class AuthController {
     @Autowired
     private RefreshTokenService refreshTokenService;
 
-    @Operation(summary = "Login", method = "POST")
+    @Operation(summary = "Log the user in", method = "POST")
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
@@ -62,6 +62,7 @@ public class AuthController {
                 );
     }
 
+    @Operation(summary = "Register the user in the Database, receive a Phone Number or E-mail as Credential and a Password")
     @Transactional
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest){
@@ -82,6 +83,7 @@ public class AuthController {
         );
     }
 
+    @Operation(summary = "Refresh the JWT token using the Refresh Token")
     @Transactional
     @RequestMapping(value = "/refresh", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RefreshResponse> refresh(@RequestBody RefreshRequest refreshRequest){
